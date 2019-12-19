@@ -1,39 +1,39 @@
 <mat-card>
-    <mat-card-content>
-      <form class="example-form" [formGroup]="payrollCalForm">
-        <table class="example-full-width" cellspacing="0">
-          <tr>
-            <td>
-              <mat-form-field class="example-full-width" [hideRequiredMarker]="true" [floatLabel]="'auto'">
-                <input matInput placeholder="Company No" [(ngModel)]="cmpNo" [ngModelOptions]="{standalone: true}"
-                  required>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field class="example-full-width">
-                <mat-select [(value)]="selectedEpfEmp" placeholder="Select search type" (selectionChange)="searchType()">
-                  <mat-option value="epfNo">EPF No</mat-option>
-                  <mat-option value="empNo">EMP No</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field class="example-full-width" [hidden]="!selectedEpfEmp">
-                <input matInput placeholder={{placeHolderEpfEmp}} [(ngModel)]="valueEpfEmp"
-                  [ngModelOptions]="{standalone: true}">
-              </mat-form-field>
-            </td>
-            <td>
-              <button mat-raised-button color="primary" (click)="calculate()">Calculate</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <mat-card-content>
-      <!-- <table class="table table-bordered table-striped">
+  <mat-card-content>
+    <form class="example-form" [formGroup]="payrollCalForm">
+      <table class="example-full-width" cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" [hideRequiredMarker]="true" [floatLabel]="'auto'">
+              <input matInput placeholder="Company No" [(ngModel)]="cmpNo" [ngModelOptions]="{standalone: true}"
+                required>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width">
+              <mat-select [(value)]="selectedEpfEmp" placeholder="Select search type" (selectionChange)="searchType()">
+                <mat-option value="epfNo">EPF No</mat-option>
+                <mat-option value="empNo">EMP No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" *ngIf="selectedEpfEmp">
+              <input matInput placeholder={{placeHolderEpfEmp}} [(ngModel)]="valueEpfEmp"
+                [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="calculate()" [disabled]="!cmpNo">Calculate</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <!-- <table class="table table-bordered table-striped">
     <thead>
       <tr>
         <th>Emp No</th>
@@ -95,172 +95,172 @@
       </tr>
     </tbody>
   </table> -->
-  
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-      </mat-form-field>
-  
-      <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-  
-        <!-- Emp No Column -->
-        <ng-container matColumnDef="empNo">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Emp No </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.empNo}} </mat-cell>
-        </ng-container>
-  
-        <!-- Epf No Column -->
-        <ng-container matColumnDef="epfNo">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Epf No </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.epfNo}} </mat-cell>
-        </ng-container>
-  
-        <!-- Emp Name Column -->
-        <ng-container matColumnDef="empName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Emp Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.empName}} </mat-cell>
-        </ng-container>
-  
-        <!-- Dept Column -->
-        <ng-container matColumnDef="dept">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Dept </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.dept}} </mat-cell>
-        </ng-container>
-  
-        <!-- No OT Hrs Column -->
-        <ng-container matColumnDef="nOtHrs">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> No OT Hrs </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nOtHrs}} </mat-cell>
-        </ng-container>
-  
-        <!-- No OT Column -->
-        <ng-container matColumnDef="nOt">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> No OT </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.nOt}} </mat-cell>
-        </ng-container>
-  
-        <!-- D OT Hrs Column -->
-        <ng-container matColumnDef="dOtHrs">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> D OT Hrs </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.dOtHrs}} </mat-cell>
-        </ng-container>
-  
-        <!-- D OT Column -->
-        <ng-container matColumnDef="dOt">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> D OT </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.dOt}} </mat-cell>
-        </ng-container>
-  
-        <!-- Basic Sal Column -->
-        <ng-container matColumnDef="basicSal">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Basic Sal </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.basicSal}} </mat-cell>
-        </ng-container>
-  
-        <!-- No Pay Days Column -->
-        <ng-container matColumnDef="npDays">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> No Pay Days </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.npDays}} </mat-cell>
-        </ng-container>
-  
-        <!-- No Pay Amt Column -->
-        <ng-container matColumnDef="npAmt">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> No Pay Amt </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.npAmt}} </mat-cell>
-        </ng-container>
-  
-        <!-- Sal For Epf Column -->
-        <ng-container matColumnDef="salForEpf">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Sal For Epf </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.salForEpf}} </mat-cell>
-        </ng-container>
-  
-        <!-- Tot Allow Column -->
-        <ng-container matColumnDef="totAllow">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Tot Allow </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.totAllow}} </mat-cell>
-        </ng-container>
-  
-        <!-- Gross Pay Column -->
-        <ng-container matColumnDef="grossPay">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Gross Pay </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.grossPay}} </mat-cell>
-        </ng-container>
-  
-        <!-- Tot Deduc Column -->
-        <ng-container matColumnDef="totDeduc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Tot Deduc </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.totDeduc}} </mat-cell>
-        </ng-container>
-  
-        <!-- Paye Column -->
-        <ng-container matColumnDef="paye">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Paye </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.paye}} </mat-cell>
-        </ng-container>
-  
-        <!-- Net Pay Column -->
-        <ng-container matColumnDef="netPay">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Net Pay </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.netPay}} </mat-cell>
-        </ng-container>
-  
-        <!-- Epf Employer Column -->
-        <ng-container matColumnDef="epfEmployer">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Epf Employer </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.epfEmployer}} </mat-cell>
-        </ng-container>
-  
-        <!-- Epf Employee Column -->
-        <ng-container matColumnDef="epfEmployee">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Epf Employee </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.epfEmployee}} </mat-cell>
-        </ng-container>
-  
-        <!-- Etf Column -->
-        <ng-container matColumnDef="etf">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Etf </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.etf}} </mat-cell>
-        </ng-container>
-  
-        <!-- Stmp Duty Column -->
-        <ng-container matColumnDef="stmpDuty">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Stmp Duty </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.stmpDuty}} </mat-cell>
-        </ng-container>
-  
-        <!-- Br Allow Column -->
-        <ng-container matColumnDef="brAllow">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Br Allow </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.brAllow}} </mat-cell>
-        </ng-container>
-  
-        <!-- Var Allow Column -->
-        <ng-container matColumnDef="varAllow">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Var Allow </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.varAllow}} </mat-cell>
-        </ng-container>
-  
-        <!-- Var Deduc Column -->
-        <ng-container matColumnDef="varDeduc">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Var Deduc </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.varDeduc}} </mat-cell>
-        </ng-container>
-  
-        <!-- Schedule Code Column -->
-        <ng-container matColumnDef="scheduleCode">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Code </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.scheduleCode}} </mat-cell>
-        </ng-container>
-  
-        <!-- Cmp Name Column -->
-        <ng-container matColumnDef="cmpName">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Cmp Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.cmpName}} </mat-cell>
-        </ng-container>
-  
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-    </mat-card-content>
-  </mat-card>
+
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+      <!-- Emp No Column -->
+      <ng-container matColumnDef="empNo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Emp No </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.empNo}} </mat-cell>
+      </ng-container>
+
+      <!-- Epf No Column -->
+      <ng-container matColumnDef="epfNo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Epf No </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.epfNo}} </mat-cell>
+      </ng-container>
+
+      <!-- Emp Name Column -->
+      <ng-container matColumnDef="empName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Emp Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.empName}} </mat-cell>
+      </ng-container>
+
+      <!-- Dept Column -->
+      <ng-container matColumnDef="dept">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Dept </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.dept}} </mat-cell>
+      </ng-container>
+
+      <!-- No OT Hrs Column -->
+      <ng-container matColumnDef="nOtHrs">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No OT Hrs </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nOtHrs}} </mat-cell>
+      </ng-container>
+
+      <!-- No OT Column -->
+      <ng-container matColumnDef="nOt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No OT </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nOt}} </mat-cell>
+      </ng-container>
+
+      <!-- D OT Hrs Column -->
+      <ng-container matColumnDef="dOtHrs">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> D OT Hrs </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.dOtHrs}} </mat-cell>
+      </ng-container>
+
+      <!-- D OT Column -->
+      <ng-container matColumnDef="dOt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> D OT </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.dOt}} </mat-cell>
+      </ng-container>
+
+      <!-- Basic Sal Column -->
+      <ng-container matColumnDef="basicSal">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Basic Sal </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.basicSal}} </mat-cell>
+      </ng-container>
+
+      <!-- No Pay Days Column -->
+      <ng-container matColumnDef="npDays">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No Pay Days </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.npDays}} </mat-cell>
+      </ng-container>
+
+      <!-- No Pay Amt Column -->
+      <ng-container matColumnDef="npAmt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> No Pay Amt </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.npAmt}} </mat-cell>
+      </ng-container>
+
+      <!-- Sal For Epf Column -->
+      <ng-container matColumnDef="salForEpf">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Sal For Epf </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.salForEpf}} </mat-cell>
+      </ng-container>
+
+      <!-- Tot Allow Column -->
+      <ng-container matColumnDef="totAllow">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Tot Allow </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.totAllow}} </mat-cell>
+      </ng-container>
+
+      <!-- Gross Pay Column -->
+      <ng-container matColumnDef="grossPay">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Gross Pay </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.grossPay}} </mat-cell>
+      </ng-container>
+
+      <!-- Tot Deduc Column -->
+      <ng-container matColumnDef="totDeduc">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Tot Deduc </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.totDeduc}} </mat-cell>
+      </ng-container>
+
+      <!-- Paye Column -->
+      <ng-container matColumnDef="paye">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Paye </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.paye}} </mat-cell>
+      </ng-container>
+
+      <!-- Net Pay Column -->
+      <ng-container matColumnDef="netPay">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Net Pay </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.netPay}} </mat-cell>
+      </ng-container>
+
+      <!-- Epf Employer Column -->
+      <ng-container matColumnDef="epfEmployer">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Epf Employer </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.epfEmployer}} </mat-cell>
+      </ng-container>
+
+      <!-- Epf Employee Column -->
+      <ng-container matColumnDef="epfEmployee">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Epf Employee </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.epfEmployee}} </mat-cell>
+      </ng-container>
+
+      <!-- Etf Column -->
+      <ng-container matColumnDef="etf">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Etf </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.etf}} </mat-cell>
+      </ng-container>
+
+      <!-- Stmp Duty Column -->
+      <ng-container matColumnDef="stmpDuty">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Stmp Duty </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.stmpDuty}} </mat-cell>
+      </ng-container>
+
+      <!-- Br Allow Column -->
+      <ng-container matColumnDef="brAllow">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Br Allow </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.brAllow}} </mat-cell>
+      </ng-container>
+
+      <!-- Var Allow Column -->
+      <ng-container matColumnDef="varAllow">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Var Allow </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.varAllow}} </mat-cell>
+      </ng-container>
+
+      <!-- Var Deduc Column -->
+      <ng-container matColumnDef="varDeduc">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Var Deduc </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.varDeduc}} </mat-cell>
+      </ng-container>
+
+      <!-- Schedule Code Column -->
+      <ng-container matColumnDef="scheduleCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Code </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.scheduleCode}} </mat-cell>
+      </ng-container>
+
+      <!-- Cmp Name Column -->
+      <ng-container matColumnDef="cmpName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Cmp Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.cmpName}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
