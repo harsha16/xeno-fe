@@ -5,19 +5,22 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { MainRouterModule } from './core/router/main-router.module';
-import { PayrollComponent } from './modules/payroll/components/payroll.component';
+import { RestApiService } from './core/http/api.service';
+import { PayrollModule } from './modules/payroll/payroll.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PayrollComponent
+    AppComponent
   ],
   imports: [
+    PayrollModule,
     BrowserModule,
     HttpClientModule,
     MainRouterModule
   ],
-  providers: [],
+  providers: [
+    RestApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

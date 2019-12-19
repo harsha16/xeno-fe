@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+
+const localUrl = 'http://localhost:8081/payroll/calculation';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'jwt-token'
+  })
+};
 
 @Injectable()
 export class RestApiService {
@@ -101,5 +109,33 @@ export class RestApiService {
   //   // this.postProcessing(sharable, displayLoading);
   //   return sharable;
   // }
+
+  constructor(private http: HttpClient) { }
+
+  // calculatePayroll(dto: CalPayrollReqDto): Observable<any> {
+  //   return this.http.post<CalPayrollReqDto>(localUrl, dto, httpOptions)
+  //     .pipe(
+  //       catchError(this.handleError('calculatePayroll', dto))
+  //     );
+  // }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      this.log(`${operation} failed: ${error.message}`);
+
+      return of(result as T);
+    };
+  }
+
+  private log(message: string) {
+    console.log(message);
+  }
+
+  calculate(options: string): Observable<any> {
+    const url = localUrl + options
+    return this.http.get<any[]>(url).pipe(
+      retry(3), catchError(this.handleError<any[]>('calculatePayroll', [])));
+  }
 
 }

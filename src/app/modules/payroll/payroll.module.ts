@@ -1,13 +1,27 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PayrollComponent } from './components/payroll.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, MatCardModule, MatSelectModule, MatButtonModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
 @NgModule({
-  declarations: [PayrollComponent],
+  declarations: [
+    PayrollComponent
+  ],
   imports: [
-    CommonModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatSelectModule,
+    MatButtonModule,
+    ReactiveFormsModule
   ]
 })
 export class PayrollModule { }
